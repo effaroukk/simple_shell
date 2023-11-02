@@ -1,4 +1,4 @@
-#0x16. C - Simple Shell project
+#0x16. C - Simple Shell project#
 
 This project is about writing a program to 
 1. display a prompt and wait for the user to type a command, handle errors and handle EOF.
@@ -9,5 +9,5 @@ This project is about writing a program to
 6. write your own getline function.
 
 
-#AUTHOR
+#AUTHOR#
 This program was developed by Umar Farouk Abdulai
