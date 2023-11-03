@@ -1,5 +1,5 @@
-#ifndef fk_h
-#define fk_h
+#ifndef _fk_h
+#define _fk_h
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +10,9 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+void fkPutPrompt(void);
+int fkExecCmd(const char *command);
 
 
 
