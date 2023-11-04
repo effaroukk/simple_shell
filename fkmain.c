@@ -15,10 +15,26 @@ void fk_prompt(int cmd)
  *
  * Return: nothing
  */
-void fk_diplay_prompt(void)
+void fk_display_prompt(void)
 {
 	if (isatty(STDIN_FILENO))
 	write(STDOUT_FILENO, "fkshell$ ", 9);
+}
+/**
+ * free_array - frees memory allocated for an array of strings
+ * @arr: the array of strings to be freed
+ */
+void free_array(char **arr)
+{
+	int i;
+
+	if (arr == NULL)
+		return;
+	for (i = 0; arr[i] != NULL; i++)
+	{
+		free(arr[i]);
+	}
+	free(arr);
 }
 
 /**
@@ -41,7 +57,7 @@ int main(int fk_argc, char **fk_argv, char **fk_env)
 	fk_length = 0;
 	fk_count = 0;
 
-	fk_prompt(); /*prompt from stdin*/
+	fk_prompt(0); /*prompt from stdin*/
 
 	while ((fk_characters = getline(&fk_buffer, &fk_length, stdin)))
 	{/* Signal kill for Ctrl+C */
@@ -74,10 +90,8 @@ int main(int fk_argc, char **fk_argv, char **fk_env)
 			free_array(fk_commands);
 			free(fk_buffer);
 		}
-		length = 0;
-		buffer = NULL;
-
-		fk_display_prompt();
+		fk_length = 0;
+		fk_buffer = NULL;
 	}
 	if (fk_characters == -1)
 	{
@@ -85,4 +99,26 @@ int main(int fk_argc, char **fk_argv, char **fk_env)
 	}
 	return (EXIT_SUCCESS);
 }
+/**
+ * fk_strncpcommand - Function that copies the path and appends a / and command
+ * @dest: destination to save
+ * @src: source
+ * @command: command to append
+ * @n: length of destination
+ * @c: length of command
+ * Return: address of dest
+ */
+char *fk_strncpcommand(char *dest, char *src, char *command, int n, int c)
+{
+	int fk_i, fk_j;
 
+	for (fk_i = 0; fk_i < n && src[fk_i] != '\0'; fk_i++)
+		dest[fk_i] = src[fk_i];
+	/*append "/" and "command" to the src*/
+	dest[fk_i] = '/';
+	fk_i++;
+	for (fk_j = 0; fk_j < c && command[fk_j] != '\0'; fk_j++, fk_i++)
+		dest[fk_i] = command[fk_j];
+	dest[fk_i] = '\0';
+	return (dest);
+}
