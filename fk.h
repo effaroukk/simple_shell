@@ -13,7 +13,7 @@
 
 void fkPutPrompt(void);
 int fkExecCmd(const char *command);
-
+void fk_diplay_prompt(void);
 
 
 
