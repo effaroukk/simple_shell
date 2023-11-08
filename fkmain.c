@@ -57,7 +57,7 @@ int main(int fk_argc, char **fk_argv, char **fk_env)
 	fk_length = 0;
 	fk_count = 0;
 
-	fkPutPrompt(0); /*prompt from stdin*/
+
 
 	while ((fk_characters = getline(&fk_buffer, &fk_length, stdin)))
 	{/* Signal kill for Ctrl+C */

@@ -52,8 +52,9 @@ void fk_build_message(char **av, char *fk_fir_com, int count)
  * @c: character to write
  * Return: int to print
  */
-int _fk_puterror(void)
+int _fk_puterror(char c)
 {
+	 write(STDERR_FILENO, &c, 1);
     return (0);
 }
 /**

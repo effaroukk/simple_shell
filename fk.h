@@ -20,11 +20,11 @@ void fk_diplay_prompt(void);
 char **fk_array_strtok(char *str);
 void fk_execute(char **fk_commands, char *fk_buffer,
 		char **fk_env, char **fk_argv, int fk_count);
-void null_command(char *fk_buffer);
+null_command(stdout, fk_buffer, fk_count);
 void _path(char **fk_commands, char *fk_buffer,
 		char **fk_env, char **fk_argv, int fk_count);
-char **fk_store_e_variables(char *fk_fir_com, char **environ);
-int _fk_puterror(void);
+char **fk_store_e_variables(char *fk_fir_com);
+int _fk_puterror(char c);
 void fkPutPrompt(void);
 void _strncpcommand(char *arg1, char *arg2,
 		char *arg3, int arg4, int arg5);

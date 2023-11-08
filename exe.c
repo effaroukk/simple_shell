@@ -11,13 +11,13 @@
 */
 
 void fk_execute(char **fk_commands, char *fk_buffer,
-		char **fk_env, char **fk_argv, int fk_count);
+		char **fk_env, char **fk_argv, int fk_count)
 {
     struct stat fk_fileStat;
 
     /* Check if command is NULL or empty spaces */
     if (fk_commands == NULL)
-        null_command(setbuffer);
+        null_command(stdout, fk_buffer, fk_count);
     /* Check if command is exit to exit from shell */
     else if (strcmp("exit", fk_commands[0]))
         getopt(fk_buffer, fk_commands);
