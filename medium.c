@@ -32,7 +32,7 @@ unsigned int fk_find_num_dir(char *fk_path)
  * @environ: environment variables
  * Return: environment
  */
-char **fk_store_e_variables(char *fk_fir_com, char **environ)
+char **fk_store_e_variables(char *fk_fir_com)
 {
     char **fk_directories, *fk_path_env, *fk_directory;
     unsigned int fk_length, fk_i = 0;
@@ -63,7 +63,7 @@ char **fk_store_e_variables(char *fk_fir_com, char **environ)
 
     fk_directories[fk_i] = NULL;
 
-    return fk_directories;
+    return (fk_directories);
 }
 
 /**
@@ -77,15 +77,13 @@ char *fk_getenv(const char *name, char **environ)
     char *fk_env_value, *fk_cp_name;
     unsigned int fk_i = 0, fk_length;
 
-    /*find the length of the argument and malloc space for it*/
-    fk_length = _strlen_const(name);
 
     fk_cp_name = malloc(sizeof(char) * fk_length + 1);
     if (fk_cp_name == NULL)
         return (NULL);
 
     /*copy the contents of the name argument to cp_name*/
-    _strncpyconst(fk_cp_name, name, fk_length);
+    _strlen_const(fk_cp_name, name, fk_length);
 
     /*finding the environment variable*/
     fk_env_value = strtok(environ[fk_i], "=");

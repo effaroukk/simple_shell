@@ -28,8 +28,7 @@ int _fk_puterror(void);
 void fkPutPrompt(void);
 void _strncpcommand(char *arg1, char *arg2,
 		char *arg3, int arg4, int arg5);
-void free_all_dp(Command *commands);
-
-
+void free_all_dp(char **fk_directories);
+size_t _strlen_const(const char *str);
 
 #endif

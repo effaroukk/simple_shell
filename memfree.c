@@ -26,7 +26,7 @@ void parent_free_commands(char *buffer, char **commands)
  */
 void send_to_free(char *buffer, char **commands)
 {
-	void free_all_dp(Command *commands);
+	free_all_dp(fk_directories);
     if (commands == NULL)
         parent_free_commands(buffer, commands);
     /* On exit status */
