@@ -7,11 +7,9 @@
  * @fk_n: length of the string
  * Return: fk_dest
  */
-char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n)
+char *fk_strncpyconst(char *fk_dest, char *fk_src, int fk_n)
 {
-    int fk_n = 0, i;
-    char *fk_src = "initial value";
-    char fk_dest[MAX_SIZE];
+    int i;
 
     for (i = 0; i < fk_n && fk_src[i] != '\0'; i++)
         fk_dest[i] = fk_src[i];

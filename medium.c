@@ -83,7 +83,7 @@ char *fk_getenv(const char *name, char **environ)
         return (NULL);
 
     /*copy the contents of the name argument to cp_name*/
-    _strlen_const(fk_cp_name, name, fk_length);
+    strcpy(fk_cp_name, name);
 
     /*finding the environment variable*/
     fk_env_value = strtok(environ[fk_i], "=");

@@ -14,11 +14,8 @@ void fk_execute(char **fk_commands, char *fk_buffer,
 		char **fk_env, char **fk_argv, int fk_count)
 {
 	int opt;
-
-
-   
-
-    /* Check if command is NULL or empty spaces */
+	
+	/* Check if command is NULL or empty spaces */
     if (fk_commands == NULL)
         null_command(stdout, fk_buffer, fk_count);
     /* Check if command is exit to exit from shell */
@@ -35,6 +32,8 @@ void fk_execute(char **fk_commands, char *fk_buffer,
             case 'b':
                 /* handle option 'b'*/
                 break;
+	    }
+	}
 
 
     /* Check if the command is ENV to print environment variables */
