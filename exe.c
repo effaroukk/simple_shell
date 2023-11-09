@@ -21,7 +21,7 @@ void fk_execute(char **fk_commands, char *fk_buffer,
     /* Check if command is exit to exit from shell */
     if (strcmp("exit", fk_commands[0]) == 0)
        
-     int opt;
+  
         while ((opt = getopt(fk_count, fk_argv, "a:b:")) != -1)
         {
             switch (opt)
