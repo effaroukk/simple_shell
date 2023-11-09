@@ -13,17 +13,35 @@
 void fk_execute(char **fk_commands, char *fk_buffer,
 		char **fk_env, char **fk_argv, int fk_count)
 {
-    struct stat fk_fileStat;
+	int opt;
+
+
+   
 
     /* Check if command is NULL or empty spaces */
     if (fk_commands == NULL)
         null_command(stdout, fk_buffer, fk_count);
     /* Check if command is exit to exit from shell */
-    else if (strcmp("exit", fk_commands[0]))
-        getopt(fk_buffer, fk_commands);
+    if (strcmp("exit", fk_commands[0]) == 0)
+       
+     int opt;
+        while ((opt = getopt(fk_count, fk_argv, "a:b:")) != -1)
+        {
+            switch (opt)
+            {
+            case 'a':
+                /* handle option 'a'*/
+                break;
+            case 'b':
+                /* handle option 'b'*/
+                break;
+
+
     /* Check if the command is ENV to print environment variables */
-    else if (strcmp("env", fk_commands[0]))
+    else if (strcmp("env", fk_commands[0]) == 0)
+    {
         env_end(fk_buffer, fk_commands, fk_env);
+    }
     /* Check if the command is a full path to an executable file */
     else if (access(fk_commands[0], X_OK) == 0)
     {

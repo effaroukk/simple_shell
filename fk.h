@@ -1,5 +1,5 @@
-#ifndef _fk_h
-#define _fk_h
+#ifndef FK_H
+#define FK_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +20,7 @@ void fk_diplay_prompt(void);
 char **fk_array_strtok(char *str);
 void fk_execute(char **fk_commands, char *fk_buffer,
 		char **fk_env, char **fk_argv, int fk_count);
-null_command(stdout, fk_buffer, fk_count);
+void null_command(FILE *stream, char *fk_buffer, int fk_count);
 void _path(char **fk_commands, char *fk_buffer,
 		char **fk_env, char **fk_argv, int fk_count);
 char **fk_store_e_variables(char *fk_fir_com);

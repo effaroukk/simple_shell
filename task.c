@@ -31,18 +31,20 @@ char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n)
  * @fk_n: length of the string
  * Return: fk_dest
  */
-char *fk_strncpyconst(char *fk_dest, const char *fk_src, int fk_n)
+char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n)
 {
     int i;
 
     for (i = 0; i < fk_n && fk_src[i] != '\0'; i++)
         fk_dest[i] = fk_src[i];
+
     for (; i < fk_n; i++)
+    {
         fk_dest[i] = '\0';
+    }
 
     return fk_dest;
 }
-
 /**
  * fk_strlen_const - Function to find the length of a constant string
  * @fk_str: string to calculate the length
