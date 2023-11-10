@@ -17,7 +17,7 @@ void env_end(char **env) {
 
 void _path(char **commands, char **env) {
 	 char *token;
-	 char *path_copy = strdup(_path);
+	 char *path_copy;
     
          char *path = getenv("PATH");
     if (path == NULL) {
@@ -27,7 +27,7 @@ void _path(char **commands, char **env) {
 
   
    
-
+ path_copy = strdup(path);
     if (path_copy == NULL) {
         perror("strdup");
         return;
