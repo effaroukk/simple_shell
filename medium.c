@@ -24,6 +24,43 @@ unsigned int fk_find_num_dir(char *fk_path)
 
     return fk_num_dir;
 }
+void free_all_dp(char **arr) {
+	int i = 0;
+    if (arr == NULL)
+        return;
+
+    
+    while (arr[i] != NULL) {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+}
+char *fk_strncpcommand(char *dest, const char *src, const char *command, int n, int c) {
+    int i = 0, j = 0;
+
+    /* Copy the source string to the destination*/
+    while (src[i] != '\0' && i < n) {
+        dest[i] = src[i];
+        i++;
+    }
+
+    /* Add a '/' to the destination*/
+    dest[i] = '/';
+    i++;
+
+    /* Append the command to the destination*/
+    while (command[j] != '\0' && j < c) {
+        dest[i] = command[j];
+        i++;
+        j++;
+    }
+
+    /* Null-terminate the destination string*/
+    dest[i] = '\0';
+
+    return dest;
+}
 
 /**
  * fk_store_e_variables - Function that creates a double pointer array, where stores
@@ -56,7 +93,7 @@ char **fk_store_e_variables(char *fk_fir_com)
             free_all_dp(fk_directories);
             return (NULL);
         }
-        _strncpcommand(fk_directories[fk_i], fk_directory, fk_fir_com, fk_dir_length, fk_command_length);
+        fk_strncpcommand(fk_directories[fk_i], fk_directory, fk_fir_com, fk_dir_length, fk_command_length);
         fk_i++;
         fk_directory = strtok(NULL, ":");
     }

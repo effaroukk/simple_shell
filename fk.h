@@ -30,5 +30,10 @@ void _strncpcommand(char *arg1, char *arg2,
 		char *arg3, int arg4, int arg5);
 void free_all_dp(char **fk_directories);
 size_t _strlen_const(const char *str);
+void env_end(char **fk_env);
+void free_all_dp(char **arr);
+extern char *fk_strncpcommand(char *dest, const char *src, const char *command, int n, int c);
+
+
 
 #endif

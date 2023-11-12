@@ -5,6 +5,7 @@ void fk_execute(char **fk_commands,
                 char **fk_env, char **fk_argv, int fk_count)
 {
     int opt;
+    env_end(fk_env);
 
     /* Check if command is NULL or empty spaces */
     if (fk_commands == NULL)
@@ -28,8 +29,9 @@ void fk_execute(char **fk_commands,
     /* Check if the command is ENV to print environment variables */
     else if (strcmp("env", fk_commands[0]) == 0)
     {
-        env_end(fk_env);
+	    env_end(fk_env);
     }
+    
     /* Check if the command is a full path to an executable file */
     else if (access(fk_commands[0], X_OK) == 0)
     {
