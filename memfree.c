@@ -9,13 +9,15 @@
 void parent_free_commands(char *buffer, char **commands)
 {
 	unsigned int i;
-    free(buffer); /** Use the standard 'free' function to free the buffer**/
 
-    for (i = 0; commands[i]; i++) {
-        free(commands[i]); /** Use the standard 'free' function to free individual elements**/
-    }
+	free(buffer);
 
-    free(commands); /** Use the standard 'free' function to free the array**/
+	for (i = 0; commands[i]; i++)
+	{
+		free(commands[i]);
+	}
+
+	free(commands);
 }
 
 /**
@@ -27,16 +29,21 @@ void parent_free_commands(char *buffer, char **commands)
 void send_to_free(char *buffer, char **commands)
 {
 	char **fk_directories = NULL;
+
 	free_all_dp(fk_directories);
-    if (commands == NULL)
-        parent_free_commands(buffer, commands);
-    /* On exit status */
-    else if (strcmp("exit", commands[0])) {
-        free(buffer);
-        free_all_dp(commands);
-        exit(0); /** Use the 'exit' system call to exit the program**/
-    } else {
-        parent_free_commands(buffer, commands);
-    }
+
+	if (commands == NULL)
+	parent_free_commands(buffer, commands);
+
+	else if (strcmp("exit", commands[0]))
+	{
+		free(buffer);
+		free_all_dp(commands);
+		exit(0);
+	}
+	else
+	{
+		parent_free_commands(buffer, commands);
+	}
 }
 
