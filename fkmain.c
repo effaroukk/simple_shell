@@ -58,31 +58,34 @@ int main(int fk_argc, char **fk_argv, char **fk_env)
 	fk_length = 0;
 	fk_count = 0;
 
+	if (path != NULL)
+	{
+		char *token = strtok(path, ":");
 
-    if (path != NULL) {
-        char *token = strtok(path, ":");
-        while (token != NULL) {
-            printf("Directory: %s\n", token);
-            token = strtok(NULL, ":");
-        }
-    } else {
-        printf("PATH environment variable not found.\n");
-    }
-
+		while (token != NULL)
+		{
+			printf("Directory: %s\n", token);
+			token = strtok(NULL, ":");
+		}
+	}
+	else
+	{
+		printf("PATH environment variable not found.\n");
+	}
 	while ((fk_characters = getline(&fk_buffer, &fk_length, stdin)))
-	{/* Signal kill for Ctrl+C */
+	{
 		signal(SIGINT, fk_prompt);
 
-		if (fk_characters == -1)/* Check the end of file */
+		if (fk_characters == -1)
 		{
 			free(fk_buffer);
 			continue;
 		}
 		fk_count++;
-		/* Collect commands from the prompt and store in double pointer */
+
 		fk_commands = fk_array_strtok(fk_buffer);
 
-		pid = fork(); /* Create a new process */
+		pid = fork();
 
 		if (pid == -1)
 		{
@@ -108,29 +111,3 @@ int main(int fk_argc, char **fk_argv, char **fk_env)
 	}
 	return (EXIT_SUCCESS);
 }
-/**
- * fk_strncpcommand - Function that copies the path and appends a / and command
- * @dest: destination to save
- * @src: source
- * @command: command to append
- * @n: length of destination
- * @c: length of command
- * Return: address of dest
- */
-/*char *fk_strncpcommand(char *dest, const char *src, const char *command, int n, int c) {
-    int fk_i, fk_j;
-
-    for (fk_i = 0; fk_i < n && src[fk_i] != '\0'; fk_i++)
-        dest[fk_i] = src[fk_i];
-
-     append "/" and "command" to the src
-    dest[fk_i] = '/';
-    fk_i++;
-
-    for (fk_j = 0; fk_j < c && command[fk_j] != '\0'; fk_j++, fk_i++)
-        dest[fk_i] = command[fk_j];
-
-    dest[fk_i] = '\0';
-    return dest;
-}*/
-

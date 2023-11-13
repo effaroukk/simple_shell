@@ -1,5 +1,10 @@
 #include "fk.h"
 
+/**
+ * null_command - a function that writes to the stream
+ * @stream: the output
+ * @count: argument count
+ */
 void null_command(FILE *stream, int count)
 {
 	fprintf(stream, "Error: Null or empty
@@ -7,7 +12,10 @@ void null_command(FILE *stream, int count)
 }
 
 
-
+/**
+ * env_end - end of env
+ *@env: environmet
+ */
 void env_end(char **env)
 {
 	int i = 0;
@@ -18,6 +26,11 @@ void env_end(char **env)
 		i++;
 	}
 }
+/**
+ * _path - the path
+ * @commands: commands to input
+ * @env: the environment
+ */
 void _path(char **commands, char **env);
 void _path(char **commands, char **env)
 {
@@ -39,8 +52,6 @@ void _path(char **commands, char **env)
 	token = strtok(path_copy, ":");
 	while (token != NULL)
 	{
-		/* Build the full path to the executable by
-		  concatenating the directory and the command*/
 		char *full_path = malloc(strlen
 				(token) + 1 + strlen(commands[0]) + 1);
 
