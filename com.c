@@ -7,8 +7,8 @@
  */
 void null_command(FILE *stream, int count)
 {
-	fprintf(stream, "Error: Null or empty
-			command in execution attempt #%d\n", count);
+	fprintf(stream, "Error: Null or empty "
+			"command in execution attempt #%d\n", count);
 }
 
 
@@ -81,4 +81,4 @@ void _path(char **commands, char **env)
 	/* If we reach here, the executable was not found in any $PATH directory*/
 	fprintf(stderr, "Error: Command not found in $PATH\n");
 	free(path_copy);
-`}
+}
