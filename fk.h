@@ -14,7 +14,9 @@
 #include <dirent.h>
 #include <limits.h>
 #define MAX_SIZE 340
+#define FK_BUFFER_SIZE 1024
 
+char *fk_my_getline(void);
 void fkPutPrompt(void);
 int fkExecCmd(const char *command);
 void fk_diplay_prompt(void);
