@@ -1,14 +1,15 @@
 #include "fk.h"
 
 /**
- * fk_my_getline - a function that
- *
+ * fk_my_getline - Read a line from the standard input.
+ *Return: Length of the line read or -1 on error.
  */
+char *fk_my_getline(void);
 char *fk_my_getline(void)
 {
 	static char fk_buffer[FK_BUFFER_SIZE];
-	static size_t fk_buffer_index = 0;
-	static ssize_t fk_bytes_read = 0;
+	static size_t fk_buffer_index;
+	static ssize_t fk_bytes_read;
 
 	char *fk_line = NULL;
 	size_t fk_line_size = 0;
@@ -33,8 +34,9 @@ char *fk_my_getline(void)
 			}
 			fk_buffer_index = 0;
 		}
-		
-		while (fk_buffer_index < (size_t)fk_bytes_read && fk_buffer[fk_buffer_index] != '\n')
+
+		while (fk_buffer_index < (size_t)fk_bytes_read &&
+				fk_buffer[fk_buffer_index] != '\n')
 		{
 			if (fk_line_size % FK_BUFFER_SIZE == 0)
 			{
@@ -45,17 +47,18 @@ char *fk_my_getline(void)
 					exit(EXIT_FAILURE);
 				}
 			}
-			
+
 			fk_line[fk_line_size++] = fk_buffer[fk_buffer_index++];
 		}
 
-		if (fk_buffer_index < (size_t)fk_bytes_read && fk_buffer[fk_buffer_index] == '\n')
+		if (fk_buffer_index < (size_t)fk_bytes
+				_read && fk_buffer[fk_buffer_index] == '\n')
 		{
 			fk_line[fk_line_size++] = fk_buffer[fk_buffer_index++];
 			break;
 		}
 	}
-	
+
 	fk_line[fk_line_size] = '\0';
 
 	return (fk_line);
