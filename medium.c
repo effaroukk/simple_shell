@@ -84,8 +84,11 @@ char **fk_store_e_variables(char *fk_fir_com)
 	int fk_dir_length, fk_command_length;
 
 	char *fk_path_env = getenv("PATH");
+
 	fk_length = fk_find_num_dir(fk_path_env);
+
 	fk_directories = malloc(sizeof(char *) * (fk_length + 1));
+
 	if (fk_directories == NULL)
 	return (NULL);
 

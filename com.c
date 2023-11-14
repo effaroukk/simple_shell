@@ -7,8 +7,7 @@
  */
 void null_command(FILE *stream, int count)
 {
-	fprintf(stream, "Error: Null or empty "
-			"command in execution attempt #%d\n", count);
+	fprintf(stream, "Error: Null or empty #%d\n", count);
 }
 
 

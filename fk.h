@@ -34,7 +34,8 @@ void free_all_dp(char **fk_directories);
 size_t _strlen_const(const char *str);
 void env_end(char **fk_env);
 void free_all_dp(char **arr);
-extern char *fk_strncpcommand(char *dest, const char *src, const char *command, int n, int c);
+extern char *fk_strncpcommand(char *dest, const
+		char *src, const char *command, int n, int c);
 
 
 
