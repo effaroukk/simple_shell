@@ -5,7 +5,7 @@
  *          constant function prototype.
  * Return: Always 0
  */
-int fk_myenv(fk_info_t *fk_info)
+int fk_myenv(siginfo_t *fk_info)
 {
 	print_list_str(fk_info->fk_env);
 	return (0);
@@ -18,7 +18,7 @@ int fk_myenv(fk_info_t *fk_info)
  *
  * Return: the value
  */
-char *fk_getenv(fk_info_t *fk_info, const char *fk_name)
+char *fk_getenv(siginfo_t *fk_info, const char *fk_name)
 {
 	list_t *fk_node = fk_info->fk_env;
 	char *p;
@@ -40,7 +40,7 @@ char *fk_getenv(fk_info_t *fk_info, const char *fk_name)
  *        constant function prototype.
  *  Return: Always 0
  */
-int fk_mysetenv(fk_info_t *fk_info)
+int fk_mysetenv(siginfo_t *fk_info)
 {
 	if (fk_info->fk_argc != 3)
 	{
@@ -58,7 +58,7 @@ int fk_mysetenv(fk_info_t *fk_info)
  *        constant function prototype.
  * Return: Always 0
  */
-int fk_myunsetenv(fk_info_t *fk_info)
+int fk_myunsetenv(siginfo_t *fk_info)
 {
 	int i;
 
@@ -79,7 +79,7 @@ int fk_myunsetenv(fk_info_t *fk_info)
  *          constant function prototype.
  * Return: Always 0
  */
-int fk_populate_env_list(fk_info_t *fk_info)
+int fk_populate_env_list(siginfo_t *fk_info)
 {
 	list_t *fk_node = NULL;
 	size_t i;

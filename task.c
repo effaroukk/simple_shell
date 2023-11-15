@@ -35,15 +35,15 @@ int fk_erratoi(char *fk_s)
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  */
-void fk_print_error(fk_info_t *fk_info, char *fk_estr)
+void fk_print_error(info_t *fk_info, char *fk_estr)
 {
-	_eputs(fk_info->fk_fname);
-	_eputs(": ");
-	print_d(fk_info->fk_line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(fk_info->fk_argv[0]);
-	_eputs(": ");
-	_eputs(fk_estr);
+	fk_eputs(fk_info->fk_fname);
+	fk_eputs(": ");
+	printf(fk_info->fk_line_count, STDERR_FILENO);
+	fk_eputs(": ");
+	fk_eputs(fk_info->fk_argv[0]);
+	fk_eputs(": ");
+	fk_eputs(fk_estr);
 }
 
 /**
@@ -53,14 +53,14 @@ void fk_print_error(fk_info_t *fk_info, char *fk_estr)
  *
  * Return: number of characters printed
  */
-int fk_print_d(int fk_input, int fk_fd);
+int fk_print_d(int fk_input, int fk_fd)
 {
-	int (*__putchar)(char) = _putchar;
+	int (*__putchar)(char) = __putchar;
 	int i, count = 0;
 	unsigned int _abs_, current;
 
 	if (fk_fd == STDERR_FILENO)
-		__putchar = _eputchar;
+		__putchar = __putchar;
 
 	if (fk_input < 0)
 	{

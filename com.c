@@ -1,11 +1,12 @@
 #include "fk.h"
+
 /**
  * fk_interactive - returns true if shell is in interactive mode
  * @fk_info: struct address
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
-int fk_interactive(siginfo_t *fk_info);
+int fk_interactive(struct fk_info *fk_info)
 {
 	return (isatty(STDIN_FILENO) && fk_info->fk_readfd <= 2);
 }

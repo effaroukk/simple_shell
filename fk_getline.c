@@ -37,7 +37,7 @@ ssize_t fk_input_buf(info_t *info, char **fk_buf, size_t *fk_len)
 		/* if (fk_strchr(*fk_buf, ';')) is this a command chain? */
 		{
 		*fk_len = r;
-		info->cmd_buf = fk_buf;
+		info->cmd_buf = *fk_buf;
 		}
 	}
 	}
@@ -57,7 +57,7 @@ ssize_t fk_get_input(info_t *info)
 	ssize_t r = 0;
 	char **fk_buf_p = &(info->arg), *p;
 
-	_putchar(BUF_FLUSH);
+	putchar(BUF_FLUSH);
 	r = fk_input_buf(info, &fk_buf, &fk_len);
 	if (r == -1) /* EOF */
 	return (-1);
@@ -82,7 +82,7 @@ ssize_t fk_get_input(info_t *info)
 	}
 
 	*fk_buf_p = p; /* pass back pointer to current command position */
-	return (fk_strlen(p)); /* return length of current command */
+	return (fk_strchr(p)); /* return length of current command */
 	}
 
 	*fk_buf_p = fk_buf; /* else not a chain, pass back buffer from fk_getline() */
@@ -103,7 +103,7 @@ ssize_t fk_read_buf(info_t *info, char *fk_buf, size_t *fk_i)
 
 	if (*fk_i)
 	return (0);
-	r = read(info->readfd, fk_buf, READ_BUF_SIZE);
+	r = read(info->readfd, fk_buf, WRITE_BUF_SIZE);
 	if (r >= 0)
 	*fk_i = r;
 	return (r);
@@ -119,7 +119,7 @@ ssize_t fk_read_buf(info_t *info, char *fk_buf, size_t *fk_i)
  */
 int fk_getline(info_t *info, char **ptr, size_t *length)
 {
-	static char fk_buf[READ_BUF_SIZE];
+	static char fk_buf[WRITE_BUF_SIZE];
 	static size_t fk_i, fk_len;
 	size_t fk_k;
 	ssize_t r = 0, s = 0;
@@ -137,7 +137,7 @@ int fk_getline(info_t *info, char **ptr, size_t *length)
 
 	c = fk_strchr(fk_buf + fk_i, '\n');
 	fk_k = c ? 1 + (unsigned int)(c - fk_buf) : fk_len;
-	new_p = fk_realloc(p, s, s ? s + fk_k : fk_k + 1);
+	new_p = realloc(p, s, s ? s + fk_k : fk_k + 1);
 	if (!new_p) /* MALLOC FAILURE! */
 	return (p ? free(p), -1 : -1);
 
@@ -164,8 +164,8 @@ int fk_getline(info_t *info, char **ptr, size_t *length)
  */
 void fk_sigintHandler(__attribute__((unused))int fk_sig_num)
 {
-	fk_puts("\n");
-	fk_puts("$ ");
-	fk_putchar(BUF_FLUSH);
+	fk_eputs("\n");
+	fk_eputs("$ ");
+	fk_eputchar(BUF_FLUSH);
 }
 

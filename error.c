@@ -6,7 +6,7 @@
  *
  * Return: Nothing
  */
-void fk_eputs(char *fk_str);
+void fk_eputs(char *fk_str)
 {
 	int fk_i = 0;
 

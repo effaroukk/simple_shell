@@ -8,7 +8,7 @@
  */
 int fk_main(int fk_ac, char **fk_av)
 {
-	fk_info_t fk_info[] = {FK_INFO_INIT};
+	info_t fk_info[] = {FK_INFO_INIT};
 	int fd = 2;
 
 	asm ("mov %1, %0\n\t"
@@ -25,19 +25,19 @@ int fk_main(int fk_ac, char **fk_av)
 		exit(126);
 		if (errno == ENOENT)
 		{
-		_eputs(fk_av[0]);
-		_eputs(": 0: Can't open ");
-		_eputs(fk_av[1]);
-		_eputchar('\n');
-		_eputchar(BUF_FLUSH);
+		fk_eputs(fk_av[0]);
+		fk_eputs(": 0: Can't open ");
+		fk_eputs(fk_av[1]);
+		fk_eputchar('\n');
+		fk_eputchar(BUF_FLUSH);
 		exit(127);
 		}
 		return (EXIT_FAILURE);
 	}
-	fk_info->fk_readfd = fd;
+	fk_info->readfd = fd;
 	}
 	fk_populate_env_list(fk_info);
-	fk_read_history(fk_info);
+	fk_myhistory(fk_info);
 	fk_hsh(fk_info, fk_av);
 	return (EXIT_SUCCESS);
 }

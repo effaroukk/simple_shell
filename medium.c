@@ -6,7 +6,7 @@
  *        constant function prototype.
  *  Return: Always 0
  */
-int fk_myhistory(fk_info_t *fk_info)
+int fk_myhistory(info_t *fk_info)
 {
 	print_list(fk_info->fk_history);
 	return (0);
@@ -19,7 +19,7 @@ int fk_myhistory(fk_info_t *fk_info)
  *
  * Return: Always 0 on success, 1 on error
  */
-int fk_unset_alias(fk_info_t *fk_info, char *fk_str)
+int fk_unset_alias(info_t *fk_info, char *fk_str)
 {
 	char *p, c;
 	int ret;
@@ -43,7 +43,7 @@ int fk_unset_alias(fk_info_t *fk_info, char *fk_str)
  *
  * Return: Always 0 on success, 1 on error
  */
-int fk_set_alias(fk_info_t *fk_info, char *fk_str)
+int fk_set_alias(info_t *fk_info, char *fk_str)
 {
 	char *p;
 
@@ -69,12 +69,12 @@ int fk_print_alias(list_t *fk_node)
 
 	if (fk_node)
 	{
-		p = _strchr(fk_node->str, '=');
+		p = strchr(fk_node->str, '=');
 		for (a = fk_node->str; a <= p; a++)
-			_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
+			putchar(*a);
+		putchar('\'');
+		puts(p + 1);
+		puts("'\n");
 		return (0);
 	}
 	return (1);
@@ -86,7 +86,7 @@ int fk_print_alias(list_t *fk_node)
  *          constant function prototype.
  *  Return: Always 0
  */
-int fk_myalias(fk_info_t *fk_info)
+int fk_myalias(info_t *fk_info)
 {
 	int i = 0;
 	char *p = NULL;
