@@ -5,7 +5,7 @@
  *          constant function prototype.
  * Return: Always 0
  */
-int fk_myenv(siginfo_t *fk_info)
+int fk_myenv(info_t *fk_info)
 {
 	print_list_str(fk_info->fk_env);
 	return (0);
@@ -18,7 +18,7 @@ int fk_myenv(siginfo_t *fk_info)
  *
  * Return: the value
  */
-char *fk_getenv(siginfo_t *fk_info, const char *fk_name)
+char *fk_getenv(info_t *fk_info, const char *fk_name)
 {
 	list_t *fk_node = fk_info->fk_env;
 	char *p;
@@ -40,16 +40,18 @@ char *fk_getenv(siginfo_t *fk_info, const char *fk_name)
  *        constant function prototype.
  *  Return: Always 0
  */
-int fk_mysetenv(siginfo_t *fk_info)
+int fk_mysetenv(info_t *fk_info)
 {
-	if (fk_info->fk_argc != 3)
+	if (fk_info != NULL && fk_info->fk_argv != NULL)
 	{
-		_eputs("Incorrect number of arguments\n");
-		return (1);
-	}
-	if (_setenv(fk_info, fk_info->fk_argv[1], fk_info->fk_argv[2]))
-		return (0);
-	return (1);
+		if (fk_info->fk_argv[1] != NULL && fk_info->fk_argv[2] != NULL)
+		{
+			const char *env_var_name = fk_info->fk_argv[1];
+			const char *env_var_value = fk_info->fk_argv[2];
+
+		if (setenv(env_var_name, env_var_value, 1) != 0)
+			return (1);
+		}
 }
 
 /**
@@ -58,35 +60,39 @@ int fk_mysetenv(siginfo_t *fk_info)
  *        constant function prototype.
  * Return: Always 0
  */
-int fk_myunsetenv(siginfo_t *fk_info)
+int fk_myunsetenv(info_t *fk_info)
 {
 	int i;
 
 	if (fk_info->fk_argc == 1)
 	{
-		_eputs("Too few arguments.\n");
+		fk_eputs("Too few arguments.\n");
 		return (1);
 	}
-	for (i = 1; i <= fk_info->fk_argc; i++)
-		_unsetenv(fk_info, fk_info->fk_argv[i]);
+	for (i = 0; fk_info->fk_argv[i] != NULL; i++)
+	{
+		const char *env_var_name = fk_info->fk_argv[i];
+		unsetenv(env_var_name);
 
 	return (0);
+	}
 }
-
 /**
  * fk_populate_env_list - populates env linked list
  * @fk_info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
-int fk_populate_env_list(siginfo_t *fk_info)
+int fk_populate_env_list(info_t *fk_info)
 {
 	list_t *fk_node = NULL;
 	size_t i;
 
 	for (i = 0; environ[i]; i++)
+	{
 	add_node_end(&fk_node, environ[i], 0);
 	fk_info->fk_env = fk_node;
+	}
 	return (0);
 }
 

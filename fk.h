@@ -42,18 +42,22 @@ struct fk_info
 
 typedef struct
 {
+	char **fk_argv;
+	int fk_argc;
+	list_t *fk_env;
 	int readfd;
 	char *cmd_buf;
 	char *fk_fname;
 	int fk_line_count;
-	char **fk_argv;
 	int linecount_flag;
 	int histcount;
 	char *arg;
 } info_t;
 int fk_is_delim(char c, char *delim);
 int fk_is_alpha(int c);
+void add_node_end(list_t **head, const char *str, int other_parameter);
 int fk_atoi(char *s);
+char *starts_with(const char *str, const char *prefix);
 void fk_eputs(char *fk_str);
 int fk_eputchar(char fk_c);
 int fk_putfd(char fk_c, int fk_fd);
@@ -61,20 +65,19 @@ int fk_putsfd(char *fk_str, int fk_fd);
 char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n);
 char *fk_strncat(char *fk_dest, char *fk_src, int fk_n);
 char *fk_strchr(char *fk_s, char fk_c);
-int fk_myexit(siginfo_t *fk_info);
-int fk_mycd(siginfo_t *fk_info);
-int fk_myhelp(siginfo_t *fk_info);
+int fk_myexit(info_t *fk_info);
+int fk_mycd(info_t *fk_info);
+int fk_myhelp(info_t *fk_info);
 int fk_main(int fk_ac, char **fk_av);
-int fk_myhistory(siginfo_t *fk_info);
-int fk_unset_alias(siginfo_t *fk_info, char *fk_str);
-int fk_set_alias(siginfo_t *fk_info, char *fk_str);
+int fk_myhistory(info_t *fk_info);
+int fk_unset_alias(info_t *fk_info, char *fk_str);
+int fk_set_alias(info_t *fk_info, char *fk_str);
 int fk_print_alias(list_t *fk_node);
-int fk_myalias(siginfo_t *fk_info);
-int fk_myenv(siginfo_t *fk_info);
-char *fk_getenv(siginfo_t *fk_info, const char *fk_name);
-int fk_mysetenv(siginfo_t *fk_info);
-int fk_myunsetenv(siginfo_t *fk_info);
-int fk_populate_env_list(siginfo_t *fk_info);
+int fk_myalias(info_t *fk_info);
+char *fk_getenv(info_t *fk_info, const char *fk_name);
+int fk_mysetenv(info_t *fk_info);
+int fk_myunsetenv(info_t *fk_info);
+int fk_populate_env_list(info_t *fk_info);
 int fk_erratoi(char *fk_s);
 void fk_print_error(info_t *fk_info, char *fk_estr);
 int fk_print_d(int fk_input, int fk_fd);
@@ -94,7 +97,7 @@ void fk_build_history_list(info_t *info,
 		const char *command, int histcount);
 void fk_check_chain(info_t *info, char *fk_buf,
 		size_t *fk_j, size_t fk_i, size_t fk_len);
-
+void print_list_str(list_t *head);
 
 
 
