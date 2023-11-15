@@ -39,7 +39,7 @@ void fk_print_error(info_t *fk_info, char *fk_estr)
 {
 	fk_eputs(fk_info->fk_fname);
 	fk_eputs(": ");
-	printf(fk_info->fk_line_count, STDERR_FILENO);
+	printf("%d", fk_info->fk_line_count);
 	fk_eputs(": ");
 	fk_eputs(fk_info->fk_argv[0]);
 	fk_eputs(": ");

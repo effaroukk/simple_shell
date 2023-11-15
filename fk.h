@@ -76,7 +76,7 @@ int fk_mysetenv(siginfo_t *fk_info);
 int fk_myunsetenv(siginfo_t *fk_info);
 int fk_populate_env_list(siginfo_t *fk_info);
 int fk_erratoi(char *fk_s);
-void fk_print_error(siginfo_t *fk_info, char *fk_estr);
+void fk_print_error(info_t *fk_info, char *fk_estr);
 int fk_print_d(int fk_input, int fk_fd);
 char *fk_convert_number(long int fk_num, int fk_base, int fk_flags);
 void fk_remove_comments(char *fk_buf);
