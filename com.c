@@ -1,83 +1,66 @@
 #include "fk.h"
-
 /**
- * null_command - a function that writes to the stream
- * @stream: the output
- * @count: argument count
+ * fk_interactive - returns true if shell is in interactive mode
+ * @fk_info: struct address
+ *
+ * Return: 1 if interactive mode, 0 otherwise
  */
-void null_command(FILE *stream, int count)
+int fk_interactive(fk_info_t *fk_info)
 {
-	fprintf(stream, "Error: Null or empty #%d\n", count);
+	return (isatty(STDIN_FILENO) && fk_info->fk_readfd <= 2);
 }
 
-
 /**
- * env_end - end of env
- *@env: environmet
+ * fk_is_delim - checks if character is a delimiter
+ * @c: the char to check
+ * @delim: the delimiter string
+ * Return: 1 if true, 0 if false
  */
-void env_end(char **env)
+int fk_is_delim(char c, char *delim)
 {
-	int i = 0;
-
-	while (env[i] != NULL)
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
+	while (*delim)
+		if (*delim++ == c)
+			return (1);
+	return (0);
 }
+
 /**
- * _path - the path
- * @commands: commands to input
- * @env: the environment
+ * fk_is_alpha - checks for alphabetic character
+ * @c: The character to input
+ * Return: 1 if c is alphabetic, 0 otherwise
  */
-void _path(char **commands, char **env);
-void _path(char **commands, char **env)
+int fk_is_alpha(int c)
 {
-	char *token;
-	char *path_copy;
-	char *path = getenv("PATH");
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
 
-	if (path == NULL)
-	{
-		fprintf(stderr, "Error: PATH environment variable not set\n");
-		return;
-	}
-	path_copy = strdup(path);
-	if (path_copy == NULL)
-	{
-		perror("strdup");
-		return;
-	}
-	token = strtok(path_copy, ":");
-	while (token != NULL)
-	{
-		char *full_path = malloc(strlen
-				(token) + 1 + strlen(commands[0]) + 1);
+/**
+ * fk_atoi - converts a string to an integer
+ * @s: the string to be converted
+ * Return: 0 if no numbers in string, converted number otherwise
+ */
+int fk_atoi(char *s)
+{
+	int i, sign = 1, flag = 0, output;
+	unsigned int result = 0;
 
-		if (full_path == NULL)
+	for (i = 0; s[i] != '\0' && flag != 2; i++)
+	{
+		if (s[i] == '-')
+			sign *= -1;
+
+		if (s[i] >= '0' && s[i] <= '9')
 		{
-			perror("malloc");
-			free(path_copy);
-			return;
+			flag = 1;
+			result *= 10;
+			result += (s[i] - '0');
 		}
-
-		strcpy(full_path, token);
-		strcat(full_path, "/");
-		strcat(full_path, commands[0]);
-		/* Check if the executable exists in the current directory*/
-		if (access(full_path, X_OK) == 0)
-		{
-			execve(full_path, commands, env);
-			perror("execve");
-			free(full_path);
-			free(path_copy);
-			return;
-		}
-		free(full_path);
-		/* Move to the next directory in $PATH*/
-		token = strtok(NULL, ":");
+		else if (flag == 1)
+			flag = 2;
 	}
-	/* If we reach here, the executable was not found in any $PATH directory*/
-	fprintf(stderr, "Error: Command not found in $PATH\n");
-	free(path_copy);
+
+	output = (sign == -1) ? -result : result;
+
+	return (output);
 }
+

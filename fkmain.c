@@ -1,109 +1,44 @@
 #include "fk.h"
-
 /**
- * fk_prompt - prints the prompt
- * @cmd: command to be handled
- * Return: void
- */
-void fk_prompt(int cmd)
-{
-	(void)cmd;
-	write(STDOUT_FILENO, "\nfkshell$ ", 10);
-}
-
-/**
- * fk_display_prompt - displays a prompt to the user
+ * fk_main - entry point
+ * @fk_ac: arg count
+ * @fk_av: arg vector
  *
- * Return: nothing
+ * Return: 0 on success, 1 on error
  */
-void fk_display_prompt(void)
+int fk_main(int fk_ac, char **fk_av)
 {
-	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "fkshell$ ", 9);
-}
+    fk_info_t fk_info[] = {FK_INFO_INIT};
+    int fd = 2;
 
-/**
- * free_array - frees memory allocated for an array of strings
- * @arr: the array of strings to be freed
- */
-void free_array(char **arr)
-{
-	int i;
+    asm ("mov %1, %0\n\t"
+         "add $3, %0"
+         : "=r" (fd)
+         : "r" (fd));
 
-	if (arr == NULL)
-	return;
-
-	for (i = 0; arr[i] != NULL; i++)
-	{
-		free(arr[i]);
-	}
-	free(arr);
-}
-
-/**
- * main - principal function to run the shell
- * @fk_argc: argument count
- * @fk_argv: argument vector
- * @fk_env: environment variables
- * Return: 0 on exit, 1 if any failures happen
- */
-int main(int fk_argc, char **fk_argv, char **fk_env);
-int main(int fk_argc, char **fk_argv, char **fk_env)
-{
-	char *path = getenv("PATH");
-	char **fk_commands;
-	pid_t pid;
-	int fk_status, fk_count;
-	(void)fk_argc;
-	fk_count = 0;
-
-	if (path != NULL)
-	{
-		char *token = strtok(path, ":");
-
-	while (token != NULL)
-	{
-		printf("Directory: %s\n", token);
-		token = strtok(NULL, ":");
-	}
-	}
-	else
-	{
-	printf("PATH environment variable not found.\n");
-	}
-
-	while (1)
-	{
-	char *fk_line = fk_my_getline();
-
-	if (fk_line == NULL)
-	{
-		printf("Reached end of input\n");
-		break;
-	}
-
-	fk_count++;
-
-	fk_commands = fk_array_strtok(fk_line);
-
-	pid = fork();
-
-	if (pid == -1)
-	{
-		perror("Fork failed");
-		return (EXIT_FAILURE);
-	}
-	if (pid == 0)
-	{
-		fk_execute(fk_commands, fk_env, fk_argv, fk_count);
-	}
-	else
-	{
-		wait(&fk_status);
-		free_array(fk_commands);
-		free(fk_line);
-	}
-	}
-	return (EXIT_SUCCESS);
+    if (fk_ac == 2)
+    {
+        fd = open(fk_av[1], O_RDONLY);
+        if (fd == -1)
+        {
+            if (errno == EACCES)
+                exit(126);
+            if (errno == ENOENT)
+            {
+                _eputs(fk_av[0]);
+                _eputs(": 0: Can't open ");
+                _eputs(fk_av[1]);
+                _eputchar('\n');
+                _eputchar(BUF_FLUSH);
+                exit(127);
+            }
+            return (EXIT_FAILURE);
+        }
+        fk_info->fk_readfd = fd;
+    }
+    fk_populate_env_list(fk_info);
+    fk_read_history(fk_info);
+    fk_hsh(fk_info, fk_av);
+    return (EXIT_SUCCESS);
 }
 

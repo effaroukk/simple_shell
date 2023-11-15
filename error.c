@@ -1,69 +1,85 @@
 #include "fk.h"
-
 /**
- * fk_fork_fail - function that handles a fork fail
+ * _eputs - prints an input string
+ * @str: the string to be printed
+ *
  * Return: Nothing
  */
-void fk_fork_fail(void)
+void _eputs(char *str)
 {
-	perror("Error: ");
-	exit(EXIT_FAILURE);
-}
-/**
- * fk_build_message - Function to write an error message
- * @av: argument vector
- * @fk_fir_com: first command to print if not found
- * @count: number of times executed
- * Return: Nothing(void)
- */
-void fk_build_message(char **av, char *fk_fir_com, int count)
-{
-	int num_length = 1, cp, mult = 1;
+	int i = 0;
 
-	write(STDERR_FILENO, av[0], strlen(av[0]));
-	write(STDERR_FILENO, ": ", 2);
-	cp = count;
-
-	while (cp >= 10)
+	if (!str)
+		return;
+	while (str[i] != '\0')
 	{
-		cp /= 10;
-		mult *= 10;
-		num_length++;
+		_eputchar(str[i]);
+		i++;
 	}
-	while (num_length > 1)
-	{
-		if ((count / mult) < 10)
-			_fk_puterror((count / mult + '0'));
-		else
-			_fk_puterror((count / mult) % 10 + '0');
-		--num_length;
-		mult /= 10;
-	}
-	_fk_puterror(count % 10 + '0');
-	write(STDERR_FILENO, ": ", 2);
-	write(STDERR_FILENO, fk_fir_com, strlen(fk_fir_com));
-	write(STDERR_FILENO, ": not found\n", 12);
 }
 
 /**
- * _fk_puterror - Prints a char
- * @c: character to write
- * Return: int to print
+ * _eputchar - writes the character c to stderr
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-int _fk_puterror(char c)
+int _eputchar(char c)
 {
-	write(STDERR_FILENO, &c, 1);
-	return (0);
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(2, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
+
 /**
- * fk_end_file - function to control the interrupt signal
- * @buffer: buffer array created by new line
- * Return: Nothing(void)
+ * _putfd - writes the character c to given fd
+ * @c: The character to print
+ * @fd: The filedescriptor to write to
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-void fk_end_file(char *buffer)
+int _putfd(char c, int fd)
 {
-	if (isatty(STDIN_FILENO))
-		write(STDOUT_FILENO, "\n", 1);
-	free(buffer);
-	exit(0);
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(fd, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
+
+/**
+ * _putsfd - prints an input string
+ * @str: the string to be printed
+ * @fd: the filedescriptor to write to
+ *
+ * Return: the number of chars put
+ */
+int _putsfd(char *str, int fd)
+{
+	int i = 0;
+
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		i += _putfd(*str++, fd);
+	}
+	return (i);
+}
+
