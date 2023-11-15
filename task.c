@@ -7,25 +7,25 @@
  */
 int fk_erratoi(char *fk_s)
 {
-    int i = 0;
-    unsigned long int result = 0;
+	int i = 0;
+	unsigned long int result = 0;
 
-    if (*fk_s == '+')
-        fk_s++;
+	if (*fk_s == '+')
+		fk_s++;
 
-    for (i = 0; fk_s[i] != '\0'; i++)
-    {
-        if (fk_s[i] >= '0' && fk_s[i] <= '9')
-        {
-            result *= 10;
-            result += (fk_s[i] - '0');
-            if (result > INT_MAX)
-                return (-1);
-        }
-        else
-            return (-1);
-    }
-    return (result);
+	for (i = 0; fk_s[i] != '\0'; i++)
+	{
+		if (fk_s[i] >= '0' && fk_s[i] <= '9')
+		{
+			result *= 10;
+			result += (fk_s[i] - '0');
+		if (result > INT_MAX)
+			return (-1);
+		}
+		else
+			return (-1);
+	}
+	return (result);
 }
 
 /**
@@ -37,13 +37,13 @@ int fk_erratoi(char *fk_s)
  */
 void fk_print_error(fk_info_t *fk_info, char *fk_estr)
 {
-    _eputs(fk_info->fk_fname);
-    _eputs(": ");
-    print_d(fk_info->fk_line_count, STDERR_FILENO);
-    _eputs(": ");
-    _eputs(fk_info->fk_argv[0]);
-    _eputs(": ");
-    _eputs(fk_estr);
+	_eputs(fk_info->fk_fname);
+	_eputs(": ");
+	print_d(fk_info->fk_line_count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(fk_info->fk_argv[0]);
+	_eputs(": ");
+	_eputs(fk_estr);
 }
 
 /**
@@ -53,38 +53,37 @@ void fk_print_error(fk_info_t *fk_info, char *fk_estr)
  *
  * Return: number of characters printed
  */
-int fk_print_d(int fk_input, int fk_fd)
+int fk_print_d(int fk_input, int fk_fd);
 {
-    int (*__putchar)(char) = _putchar;
-    int i, count = 0;
-    unsigned int _abs_, current;
+	int (*__putchar)(char) = _putchar;
+	int i, count = 0;
+	unsigned int _abs_, current;
 
-    if (fk_fd == STDERR_FILENO)
-        __putchar = _eputchar;
+	if (fk_fd == STDERR_FILENO)
+		__putchar = _eputchar;
 
-    if (fk_input < 0)
-    {
-        _abs_ = -fk_input;
-        __putchar('-');
-        count++;
-    }
-    else
-        _abs_ = fk_input;
+	if (fk_input < 0)
+	{
+		_abs_ = -fk_input;
+		__putchar('-');
+		count++;
+	}
+	else
+		_abs_ = fk_input;
+	current = _abs_;
+	for (i = 1000000000; i > 1; i /= 10)
+	{
+	if (_abs_ / i)
+	{
+		__putchar('0' + current / i);
+		count++;
+	}
+	current %= i;
+	}
+		__putchar('0' + current);
+		count++;
 
-    current = _abs_;
-    for (i = 1000000000; i > 1; i /= 10)
-    {
-        if (_abs_ / i)
-        {
-            __putchar('0' + current / i);
-            count++;
-        }
-        current %= i;
-    }
-    __putchar('0' + current);
-    count++;
-
-    return (count);
+	return (count);
 }
 
 /**
@@ -97,30 +96,31 @@ int fk_print_d(int fk_input, int fk_fd)
  */
 char *fk_convert_number(long int fk_num, int fk_base, int fk_flags)
 {
-    static char *fk_array;
-    static char fk_buffer[50];
-    char sign = 0;
-    char *fk_ptr;
-    unsigned long fk_n = fk_num;
+	static char *fk_array;
+	static char fk_buffer[50];
+	char sign = 0;
+	char *fk_ptr;
+	unsigned long fk_n = fk_num;
 
-    if (!(fk_flags & CONVERT_UNSIGNED) && fk_num < 0)
-    {
-        fk_n = -fk_num;
-        sign = '-';
-    }
+	if (!(fk_flags & CONVERT_UNSIGNED) && fk_num < 0)
+	{
+		fk_n = -fk_num;
+		sign = '-';
+	}
 
-    fk_array = fk_flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-    fk_ptr = &fk_buffer[49];
-    *fk_ptr = '\0';
+	fk_array = fk_flags & CONVERT_LOWERCASE ?
+		"0123456789abcdef" : "0123456789ABCDEF";
+	fk_ptr = &fk_buffer[49];
+	*fk_ptr = '\0';
 
-    do {
-        *--fk_ptr = fk_array[fk_n % fk_base];
-        fk_n /= fk_base;
-    } while (fk_n != 0);
+	do {
+		*--fk_ptr = fk_array[fk_n % fk_base];
+		fk_n /= fk_base;
+	} while (fk_n != 0);
 
-    if (sign)
-        *--fk_ptr = sign;
-    return (fk_ptr);
+	if (sign)
+		*--fk_ptr = sign;
+	return (fk_ptr);
 }
 
 /**
@@ -131,13 +131,13 @@ char *fk_convert_number(long int fk_num, int fk_base, int fk_flags)
  */
 void fk_remove_comments(char *fk_buf)
 {
-    int i;
+	int i;
 
-    for (i = 0; fk_buf[i] != '\0'; i++)
-        if (fk_buf[i] == '#' && (!i || fk_buf[i - 1] == ' '))
-        {
-            fk_buf[i] = '\0';
-            break;
-        }
+	for (i = 0; fk_buf[i] != '\0'; i++)
+		if (fk_buf[i] == '#' && (!i || fk_buf[i - 1] == ' '))
+		{
+			fk_buf[i] = '\0';
+			break;
+		}
 }
 

@@ -5,7 +5,7 @@
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
-int fk_interactive(fk_info_t *fk_info)
+int fk_interactive(siginfo_t *fk_info);
 {
 	return (isatty(STDIN_FILENO) && fk_info->fk_readfd <= 2);
 }

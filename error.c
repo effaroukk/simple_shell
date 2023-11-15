@@ -1,85 +1,86 @@
 #include "fk.h"
+
 /**
- * _eputs - prints an input string
- * @str: the string to be printed
+ * fk_eputs - prints an input string
+ * @fk_str: the string to be printed
  *
  * Return: Nothing
  */
-void _eputs(char *str)
+void fk_eputs(char *fk_str);
 {
-	int i = 0;
+	int fk_i = 0;
 
-	if (!str)
-		return;
-	while (str[i] != '\0')
+	if (!fk_str)
+	return;
+	while (fk_str[fk_i] != '\0')
 	{
-		_eputchar(str[i]);
-		i++;
+		fk_eputchar(fk_str[fk_i]);
+		fk_i++;
 	}
 }
 
 /**
- * _eputchar - writes the character c to stderr
- * @c: The character to print
+ * fk_eputchar - writes the character c to stderr
+ * @fk_c: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _eputchar(char c)
+int fk_eputchar(char fk_c)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static int fk_i;
+	static char fk_buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (fk_c == BUF_FLUSH || fk_i >= WRITE_BUF_SIZE)
 	{
-		write(2, buf, i);
-		i = 0;
+		write(2, fk_buf, fk_i);
+		fk_i = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (fk_c != BUF_FLUSH)
+	fk_buf[fk_i++] = fk_c;
 	return (1);
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
+ * fk_putfd - writes the character c to given fd
+ * @fk_c: The character to print
+ * @fk_fd: The filedescriptor to write to
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _putfd(char c, int fd)
+int fk_putfd(char fk_c, int fk_fd)
 {
-	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static int fk_i;
+	static char fk_buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (fk_c == BUF_FLUSH || fk_i >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, i);
-		i = 0;
+		write(fk_fd, fk_buf, fk_i);
+		fk_i = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (fk_c != BUF_FLUSH)
+	fk_buf[fk_i++] = fk_c;
 	return (1);
 }
 
 /**
- * _putsfd - prints an input string
- * @str: the string to be printed
- * @fd: the filedescriptor to write to
+ * fk_putsfd - prints an input string
+ * @fk_str: the string to be printed
+ * @fk_fd: the filedescriptor to write to
  *
  * Return: the number of chars put
  */
-int _putsfd(char *str, int fd)
+int fk_putsfd(char *fk_str, int fk_fd)
 {
-	int i = 0;
+	int fk_i = 0;
 
-	if (!str)
-		return (0);
-	while (*str)
+	if (!fk_str)
+	return (0);
+	while (*fk_str)
 	{
-		i += _putfd(*str++, fd);
+	fk_i += fk_putfd(*fk_str++, fk_fd);
 	}
-	return (i);
+	return (fk_i);
 }
 

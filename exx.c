@@ -8,25 +8,25 @@
  */
 char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n)
 {
-    int i, j;
-    char *fk_s = fk_dest;
+	int i, j;
+	char *fk_s = fk_dest;
 
-    i = 0;
-    while (fk_src[i] != '\0' && i < fk_n - 1)
-    {
-        fk_dest[i] = fk_src[i];
-        i++;
-    }
-    if (i < fk_n)
-    {
-        j = i;
-        while (j < fk_n)
-        {
-            fk_dest[j] = '\0';
-            j++;
-        }
-    }
-    return (fk_s);
+	i = 0;
+	while (fk_src[i] != '\0' && i < fk_n - 1)
+	{
+		fk_dest[i] = fk_src[i];
+		i++;
+	}
+	if (i < fk_n)
+	{
+		j = i;
+		while (j < fk_n)
+	{
+		fk_dest[j] = '\0';
+		j++;
+	}
+	}
+	return (fk_s);
 }
 
 /**
@@ -38,22 +38,22 @@ char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n)
  */
 char *fk_strncat(char *fk_dest, char *fk_src, int fk_n)
 {
-    int i, j;
-    char *fk_s = fk_dest;
+	int i, j;
+	char *fk_s = fk_dest;
 
-    i = 0;
-    j = 0;
-    while (fk_dest[i] != '\0')
-        i++;
-    while (fk_src[j] != '\0' && j < fk_n)
-    {
-        fk_dest[i] = fk_src[j];
-        i++;
-        j++;
-    }
-    if (j < fk_n)
-        fk_dest[i] = '\0';
-    return (fk_s);
+	i = 0;
+	j = 0;
+	while (fk_dest[i] != '\0')
+	i++;
+	while (fk_src[j] != '\0' && j < fk_n)
+	{
+		fk_dest[i] = fk_src[j];
+		i++;
+		j++;
+	}
+	if (j < fk_n)
+	fk_dest[i] = '\0';
+	return (fk_s);
 }
 
 /**
@@ -64,11 +64,11 @@ char *fk_strncat(char *fk_dest, char *fk_src, int fk_n)
  */
 char *fk_strchr(char *fk_s, char fk_c)
 {
-    do {
-        if (*fk_s == fk_c)
-            return (fk_s);
-    } while (*fk_s++ != '\0');
+	do {
+		if (*fk_s == fk_c)
+		return (fk_s);
+	} while (*fk_s++ != '\0');
 
-    return (NULL);
+	return (NULL);
 }
 
