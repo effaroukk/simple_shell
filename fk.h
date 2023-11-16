@@ -17,9 +17,10 @@
 #define BUF_FLUSH '\0'
 #define CONVERT_UNSIGNED 1
 #define CONVERT_LOWERCASE 1
-
+#define CMD_NORM 0
 
 extern char **environ;
+#define FK_INFO_INIT {0}
 
 
 /**
@@ -43,31 +44,38 @@ struct fk_info
 typedef struct
 {
 	char **fk_argv;
+	const char *fk_env_var_name;
 	int fk_argc;
 	list_t *fk_env;
 	int readfd;
 	char *cmd_buf;
+	list_t *fk_history;
 	char *fk_fname;
 	int fk_line_count;
 	int linecount_flag;
+	int cmd_buf_type;
 	int histcount;
 	char *arg;
+	list_t *fk_alias;
 } info_t;
 int fk_is_delim(char c, char *delim);
 int fk_is_alpha(int c);
+void fk_hsh(info_t *info, char **fk_av);
 void add_node_end(list_t **head, const char *str, int other_parameter);
 int fk_atoi(char *s);
+char *fk_strchr(const char *s, int c);
 char *starts_with(const char *str, const char *prefix);
 void fk_eputs(char *fk_str);
 int fk_eputchar(char fk_c);
+int fk_is_chain(info_t *info, char *fk_buf, size_t *fk_j);
 int fk_putfd(char fk_c, int fk_fd);
 int fk_putsfd(char *fk_str, int fk_fd);
 char *fk_strncpy(char *fk_dest, char *fk_src, int fk_n);
 char *fk_strncat(char *fk_dest, char *fk_src, int fk_n);
-char *fk_strchr(char *fk_s, char fk_c);
 int fk_myexit(info_t *fk_info);
 int fk_mycd(info_t *fk_info);
 int fk_myhelp(info_t *fk_info);
+void delete_node_at_index(list_t **head, size_t index);
 int fk_main(int fk_ac, char **fk_av);
 int fk_myhistory(info_t *fk_info);
 int fk_unset_alias(info_t *fk_info, char *fk_str);

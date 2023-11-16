@@ -82,7 +82,7 @@ ssize_t fk_get_input(info_t *info)
 	}
 
 	*fk_buf_p = p; /* pass back pointer to current command position */
-	return (fk_strchr(p)); /* return length of current command */
+	return strlen(p); /* return length of current command */
 	}
 
 	*fk_buf_p = fk_buf; /* else not a chain, pass back buffer from fk_getline() */
@@ -137,7 +137,7 @@ int fk_getline(info_t *info, char **ptr, size_t *length)
 
 	c = fk_strchr(fk_buf + fk_i, '\n');
 	fk_k = c ? 1 + (unsigned int)(c - fk_buf) : fk_len;
-	new_p = realloc(p, s, s ? s + fk_k : fk_k + 1);
+	new_p = realloc(p, s + fk_k);
 	if (!new_p) /* MALLOC FAILURE! */
 	return (p ? free(p), -1 : -1);
 
@@ -151,8 +151,11 @@ int fk_getline(info_t *info, char **ptr, size_t *length)
 	p = new_p;
 
 	if (length)
+	{
 		*length = s;
 		*ptr = p;
+	}
+
 	return (s);
 }
 

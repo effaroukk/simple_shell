@@ -30,7 +30,7 @@ int fk_main(int fk_ac, char **fk_av)
 		fk_eputs(fk_av[1]);
 		fk_eputchar('\n');
 		fk_eputchar(BUF_FLUSH);
-		exit(127);
+		exit(200);
 		}
 		return (EXIT_FAILURE);
 	}
