@@ -1,5 +1,5 @@
-#ifndef _FK_H
-#define _FK_H
+#ifndef FK_H
+#define FK_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -49,7 +49,6 @@ typedef struct
 	list_t *fk_env;
 	int readfd;
 	char *cmd_buf;
-	list_t *fk_history;
 	char *fk_fname;
 	int fk_line_count;
 	int linecount_flag;
@@ -106,28 +105,6 @@ void fk_build_history_list(info_t *info,
 void fk_check_chain(info_t *info, char *fk_buf,
 		size_t *fk_j, size_t fk_i, size_t fk_len);
 void print_list_str(list_t *head);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,12 +1,12 @@
 #include "fk.h"
 /**
- * fk_main - entry point
+ * main - entry point
  * @fk_ac: arg count
  * @fk_av: arg vector
  *
  * Return: 0 on success, 1 on error
  */
-int fk_main(int fk_ac, char **fk_av)
+int main(int fk_ac, char **fk_av)
 {
 	info_t fk_info[] = {FK_INFO_INIT};
 	int fd = 2;
@@ -36,9 +36,7 @@ int fk_main(int fk_ac, char **fk_av)
 	}
 	fk_info->readfd = fd;
 	}
-	fk_populate_env_list(fk_info);
-	fk_myhistory(fk_info);
-	fk_hsh(fk_info, fk_av);
+
 	return (EXIT_SUCCESS);
 }
 
